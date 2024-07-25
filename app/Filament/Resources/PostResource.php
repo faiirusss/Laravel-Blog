@@ -38,18 +38,13 @@ class PostResource extends Resource
                     TextInput::make('title')
                         ->live()
                         ->required()->minLength(1)->maxLength(150)
-                        ->afterStateUpdated(function(string $operation, $state, Forms\Set $set){
-                            if($operation === 'edit')
-                            {
+                        ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+                            if ($operation === 'edit') {
                                 return;
                             }
                             $set('slug', Str::slug($state));
                         }),
-                    TextInput::make('slug')
-                        ->required()
-                        ->minLength(1)
-                        ->unique(ignoreRecord:true)
-                        ->maxLength(150),
+                        TextInput::make('slug')->required()->minLength(1)->unique(ignoreRecord: true)->maxLength(150),
                     RichEditor::make('body')
                         ->required()
                         ->fileAttachmentsDirectory('posts/images')
@@ -60,7 +55,7 @@ class PostResource extends Resource
                     FileUpload::make('image')->image()->directory('posts/thumbnails'),
                     DateTimePicker::make('published_at')->nullable(),
                     Checkbox::make('featured'),
-                    Select::make('author')
+                    Select::make('user_id')
                         ->relationship('author', 'name')
                         ->searchable()
                         ->required(),
