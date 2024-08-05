@@ -16,4 +16,5 @@ class ListComments extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
 }
